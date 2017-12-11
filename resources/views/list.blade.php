@@ -4,7 +4,7 @@
     <title>北進サイト</title>
 </head>
 <body>
-<h1>北進システムサイトその3</h1>
+<h1>北進システムサイト</h1>
 
 @foreach ($items as $item)
     <table>
