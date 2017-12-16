@@ -26,7 +26,7 @@ class CreateRestdataTable extends Migration
      *
      * @return void
      */
-    
+
     public function down()
     {
         Schema::dropIfExists('restdata');

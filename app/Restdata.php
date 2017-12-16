@@ -16,6 +16,6 @@ class Restdata extends Model
 
     public function getData()
     {
-    	return $this-> ':'. $this->message.'('. $this->url .')';
+    	return $this->id. ':'. $this->message. '('. $this->url .')';
     }
 }

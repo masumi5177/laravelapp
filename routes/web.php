@@ -44,3 +44,9 @@ Route::post('person/del', 'PersonController@remove');
 Route::get('board', 'BoardController@index');
 Route::get('board/add', 'BoardController@add');
 Route::post('board/add', 'BoardController@create');
+
+Route::resource('rest', 'Restappcontroller');
+Route::get('hello/rest', 'IndexController@rest');
+
+Route::get('hello/session', 'IndexController@ses_get');
+Route::post('hello/session', 'IndexController@ses_put');
