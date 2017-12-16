@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Person;
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
@@ -11,8 +13,21 @@ class IndexController extends Controller
     public function index(Request $request){
     	// $items = DB::select('select * from people');
      //    return view('hello.index', ['items'=>$items]);
-        $items = DB::table('people')->orderBy('age','asc')->get();
-        return view('hello.index', ['items' => $items]);
+
+        // $items = DB::table('people')->orderBy('age','asc')->get();
+        // return view('hello.index', ['items' => $items]);
+
+        // $items = DB::table('people')->orderBy('age','asc')->simplePaginate(3);
+        // $sort = $request->sort;
+        // $items = Person::orderBy($sort,'asc')->paginate(3);
+        // $param  = ['items' => $items, 'sort' => $sort];
+        // return view('hello.index', $param);
+
+        $user = Auth::user();
+        $sort = $request->sort;
+        $items = Person::orderBy($sort, 'asc')->simplePaginate(5);
+        $param = ['items' => $items, 'sort' =>$sort, 'user' => $user];
+        return view('hello.index', $param);
     }
 
     public function post(Request $request){
@@ -103,5 +118,25 @@ class IndexController extends Controller
         $msg = $request->input;
         $request->session()->put('msg', $msg);
         return redirect('hello/session');
+    }
+
+    public function getAuth(Request $request)
+    {
+        $param = ['message' => 'ログインして下さい'];
+        return view('hello.auth', $param);
+    }
+
+    public function postAuth(Request $request)
+    {
+        $email = $request->email;
+        $password = $request->password;
+        var_dump($email);
+        var_dump($password);
+        if (Auth::attempt(['email' => $email, 'password' => $password])){
+            $msg = 'ログインしました。('. Auth::user()->name .')';
+        }else{
+            $msg = 'ログインに失敗しました。';
+        }
+        return view('hello.auth', ['message'=>$msg]);
     }
 }

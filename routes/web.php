@@ -16,6 +16,9 @@ Route::get('/', function () {
 });
 Route::get('hello', 'IndexController@index');
 
+Route::get('hello/auth', 'indexController@getAuth');
+Route::post('hello/auth', 'indexController@postAuth');
+
 Route::get('hello/add', 'IndexController@add');
 Route::post('hello/add', 'IndexController@create');
 
@@ -50,3 +53,10 @@ Route::get('hello/rest', 'IndexController@rest');
 
 Route::get('hello/session', 'IndexController@ses_get');
 Route::post('hello/session', 'IndexController@ses_put');
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
