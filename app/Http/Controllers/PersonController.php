@@ -5,10 +5,18 @@ use Illuminate\Http\Request;
 
 class PersonController extends Controller
 {
+    // public function index(Request $request)
+    // {
+    // 	$items = Person::all();
+    // 	return view('person.index', ['items'=> $items]);
+    // }
+
     public function index(Request $request)
     {
-    	$items = Person::all();
-    	return view('person.index', ['items'=> $items]);
+        $hasItems = Person::has('board')->get();
+        $noItems = Person::doesntHave('board')->get();
+        $param = ['hasItems' => $hasItems, 'noItems' => $noItems];
+        return view('person.index', $param);
     }
 
     public function find(Request $request)
@@ -32,8 +40,7 @@ class PersonController extends Controller
 
         $min = $request->input * 1;
         $max = $min + 10;
-        $item = Person::ageGreaterThan($min)->
-            ageLessThan($max)->first();
+        $item = Person::ageGreaterThan($min)->ageLessThan($max)->first();
         $param = ['input'=> $request->input, 'item' => $item];
         return view('person.find', $param);
     }
@@ -85,4 +92,5 @@ class PersonController extends Controller
         Person::find($request->id)->delete();
         return redirect('/person');
     }
+
 }

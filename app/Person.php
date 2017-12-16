@@ -2,8 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\
-Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Scopes\ScopePerson;
 
@@ -46,5 +45,14 @@ class Person extends Model
 
         parent::boot();
         static::addGlobalScope(new ScopePerson);
+    }
+
+    public function board()
+    {
+        return $this->hasone('App\Board');
+    }
+        public function boards()
+    {
+        return $this->hasMany('App\Board');
     }
 }
